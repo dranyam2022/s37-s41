@@ -4,7 +4,7 @@ const app = express();
 const port = 8080;
 const dotenv = require("dotenv");
 const cors = require("cors");
-
+const userRoutes = require("./routes/userRoutes")
 
 dotenv.config();
 
@@ -20,11 +20,11 @@ let db = mongoose.connection;
 db.once("open", () => console.log("Connected to MongoDB"))
 
 
-main().catch(err => console.log(err));
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use("/users", userRoutes)
 
 app.listen(port, () => {
     console.log(`Connected to localhost:${port}`)

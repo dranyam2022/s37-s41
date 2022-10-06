@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "First Name is required."]
     },
-    lasttName: {
+    lastName: {
         type: String,
         required: [true, "Last Name is required."]
     },
@@ -43,4 +43,4 @@ const userSchema = new mongoose.Schema({
     ]
 })
 
-module.exports = mongoose.model("Course", userSchema)
+module.exports = mongoose.model("User", userSchema)
