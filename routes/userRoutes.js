@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const UserController = require("../controllers/UserController")
+const auth = require("../auth")
 
 //Check if Email Exist
 router.post("/check-email", (request, response) => {
@@ -26,11 +27,13 @@ router.post("/login", (request, response) => {
         })
 })
 
-router.get("/:id/details", (request, response) => {
+router.get("/:id/details", auth.verify, (request, response) => {
     UserController.getUserDetails(request.params)
         .then((result) => {
             response.send(result)
         })
 })
+
+
 
 module.exports = router;

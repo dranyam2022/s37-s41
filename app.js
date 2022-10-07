@@ -5,6 +5,7 @@ const port = 8080;
 const dotenv = require("dotenv");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes")
+const courseRoutes = require("./routes/courseRoutes")
 
 dotenv.config();
 
@@ -24,7 +25,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/users", userRoutes)
+app.use("/users", userRoutes);
+app.use("/courses", courseRoutes);
 
 app.listen(port, () => {
     console.log(`Connected to localhost:${port}`)
