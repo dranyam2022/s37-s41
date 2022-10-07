@@ -26,3 +26,55 @@ module.exports.addCourse = (data) => {
         return value
     })
 }
+
+//Get all courses
+module.exports.getAllCourses = () => {
+    return Course.find({})
+        .then((result) => {
+            return result
+        })
+}
+
+module.exports.getAllActive = () => {
+    return Course.find({ isActive: true })
+        .then((result) => {
+            return result
+        })
+}
+
+module.exports.getCourse = (courseId) => {
+    return Course.findById(courseId)
+        .then((result) => {
+            return result
+        })
+}
+
+module.exports.updateCourse = (courseId, newData) => {
+    return Course.findByIdAndUpdate(courseId, {
+        name: newData.name,
+        description: newData.description,
+        price: newData.price
+    })
+        .then((udpatedCourse, error) => {
+            if (error) {
+                return false
+            }
+            return {
+                message: "Course has been updated successfully!"
+            }
+        })
+}
+
+module.exports.archiveCourse = (courseId) => {
+    return Course.findByIdAndUpdate(courseId, {
+        isActive: false
+    })
+        .then((udpatedCourse, error) => {
+            if (error) {
+                return false
+            }
+            return {
+                message: "Course isActive status has been updated successfully to false!"
+            }
+        })
+}

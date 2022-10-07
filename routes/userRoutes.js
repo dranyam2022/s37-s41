@@ -28,6 +28,7 @@ router.post("/login", (request, response) => {
 })
 
 router.get("/:id/details", auth.verify, (request, response) => {
+
     UserController.getUserDetails(request.params)
         .then((result) => {
             response.send(result)
