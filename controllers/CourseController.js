@@ -2,6 +2,7 @@ const Course = require("../models/Course");
 
 
 module.exports.addCourse = (data) => {
+
     if (data.isAdmin) {
         let newCourse = new Course({
             name: data.course.name,

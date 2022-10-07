@@ -11,6 +11,7 @@ router.post("/create", auth.verify, (request, response) => {
         isAdmin: auth.decode(request.headers.authorization).isAdmin
     }
 
+
     CourseController.addCourse(data)
         .then((result) => {
             response.send(result)
@@ -56,5 +57,8 @@ router.patch("/:courseid/archive", auth.verify, (request, response) => {
             response.send(result)
         })
 })
+
+
+
 
 module.exports = router;

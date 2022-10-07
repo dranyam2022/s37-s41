@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const UserController = require("../controllers/UserController")
-const auth = require("../auth")
+const auth = require("../auth");
+const { response } = require("express");
 
 //Check if Email Exist
 router.post("/check-email", (request, response) => {
@@ -34,6 +35,27 @@ router.get("/:id/details", auth.verify, (request, response) => {
             response.send(result)
         })
 })
+
+//Enroll a User
+router.post("/enroll", auth.verify, (request, response) => {
+    let data = {
+        userId: request.body.userId,
+        courseId: request.body.courseId
+    }
+    UserController.enroll(data)
+        .then((result) => {
+            response.send(result)
+        })
+})
+
+//appoint user as admin
+router.patch("/:id/makeAdmin", auth.verify, (request, response) => {
+    UserController.makeAdmin(request.params.id)
+        .then((result) => {
+            response.send(result)
+        })
+})
+
 
 
 

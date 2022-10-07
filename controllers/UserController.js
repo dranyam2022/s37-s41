@@ -66,3 +66,56 @@ module.exports.getUserDetails = (data) => {
             return result
         })
 }
+
+module.exports.makeAdmin = (data) => {
+    return User.findByIdAndUpdate(data, {
+        isAdmin: true
+    })
+        .then((result, error) => {
+            if (error) {
+                return false
+            }
+            return {
+                message: "User is now an Admin!"
+            }
+        })
+}
+
+module.exports.enroll = async (data) => {
+    //Check if user is done adding the course to its enrollemnts array
+    let isUserUpdated = await User.findById(data.userId)
+        .then((user) => {
+            user.enrollments.push({
+                courseId: data.courseId
+            })
+            return user.save().then((updatedUser, error) => {
+                if (error) {
+                    return false
+                }
+                return true
+            })
+        })
+
+    //Check if course is done adding the user to its enrollees array
+    let isCourseUpdated = await Course.findById(data.courseId)
+        .then((course) => {
+            course.enrollees.push({
+                userId: data.userId
+            })
+            return course.save().then((updatedCourse, error) => {
+                if (error) {
+                    return false
+                }
+                return true
+            })
+        })
+    //Check if both user and course have been updated
+    if (isUserUpdated && isCourseUpdated) {
+        return {
+            message: "User enrollment is successful!"
+        }
+    }
+    return {
+        message: "Something went wrong"
+    }
+}
